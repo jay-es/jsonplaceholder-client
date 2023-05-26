@@ -11,16 +11,21 @@ const get = (path: string) =>
 export const getTodos = (): Promise<Todo[]> => get(`todos`);
 export const getTodo = (todoId: Id): Promise<Todo> => get(`todos/${todoId}`);
 
+const mutate = (
+  method: "POST" | "PUT" | "PATCH",
+  path: string,
+  payload: Record<string, unknown>
+) =>
+  fetch(`${BASE_URL}/${path}`, {
+    method,
+    body: JSON.stringify(payload),
+    headers: { "Content-type": "application/json; charset=UTF-8" },
+  }).then((res) => res.json());
+
 // POST
 type CreatePayload<T extends Item> = Omit<T, "id">;
 const create = (path: string, payload: CreatePayload<Item>) =>
-  fetch(`${BASE_URL}/${path}`, {
-    method: "POST",
-    body: JSON.stringify(payload),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  }).then((res) => res.json());
+  mutate("POST", path, payload);
 
 export const createTodo = (payload: CreatePayload<Todo>): Promise<Todo> =>
   create(`todos`, payload);
@@ -28,13 +33,7 @@ export const createTodo = (payload: CreatePayload<Todo>): Promise<Todo> =>
 // PUT
 type UpdatePayload<T extends Item> = T | Omit<T, "id">;
 const update = (path: string, payload: UpdatePayload<Item>) =>
-  fetch(`${BASE_URL}/${path}`, {
-    method: "PUT",
-    body: JSON.stringify(payload),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  }).then((res) => res.json());
+  mutate("PUT", path, payload);
 
 export const updateTodo = (
   todoId: Id,
@@ -44,13 +43,7 @@ export const updateTodo = (
 // PATCH
 type PatchPayload<T extends Item> = Partial<T>;
 const patch = (path: string, payload: PatchPayload<Item>) =>
-  fetch(`${BASE_URL}/${path}`, {
-    method: "PATCH",
-    body: JSON.stringify(payload),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  }).then((res) => res.json());
+  mutate("PATCH", path, payload);
 
 export const patchTodo = (
   todoId: Id,
