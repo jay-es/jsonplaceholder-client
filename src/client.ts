@@ -1,4 +1,4 @@
-import type { Todo } from "./validators";
+import type { Todo } from "./types";
 
 type Item = Todo;
 type Id = number | string;
