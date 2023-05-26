@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import * as client from "./client";
 import * as validators from "./validators";
 
-describe("Todos", () => {
+describe.concurrent("Todos", () => {
   it("getTodos", async () => {
     const res = await client.getTodos();
 
@@ -15,5 +15,40 @@ describe("Todos", () => {
     const res = await client.getTodo(1);
 
     expect(validators.Todo.parse(res)).toBeTruthy();
+  });
+
+  it("createTodo", async () => {
+    const res = await client.createTodo({
+      userId: 7,
+      title: "Lorem ipsum",
+      completed: false,
+    });
+
+    expect(validators.Todo.parse(res)).toBeTruthy();
+  });
+
+  it("updateTodo", async () => {
+    const res = await client.updateTodo(1, {
+      id: 1,
+      userId: 7,
+      title: "Lorem ipsum",
+      completed: false,
+    });
+
+    expect(validators.Todo.parse(res)).toBeTruthy();
+  });
+
+  it("patchTodo", async () => {
+    const res = await client.patchTodo(1, {
+      title: "Lorem ipsum",
+    });
+
+    expect(validators.Todo.parse(res)).toBeTruthy();
+  });
+
+  it("deleteTodo", async () => {
+    const res = await client.deleteTodo(1);
+
+    expect(res).toStrictEqual({});
   });
 });
