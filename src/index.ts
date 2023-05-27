@@ -1,4 +1,7 @@
 export * from "./client/albums";
+export * from "./client/comments";
+export * from "./client/photos";
 export * from "./client/posts";
 export * from "./client/todos";
-export type { Album, Post, Todo } from "./types";
+export * from "./client/users";
+export type { Album, Comment, Photo, Post, Todo, User } from "./types";

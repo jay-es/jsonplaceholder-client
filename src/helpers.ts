@@ -1,8 +1,8 @@
-import type { Album, Post, Todo } from "./types";
+import type { Album, Comment, Photo, Post, Todo, User } from "./types";
 
 type Id = number | string;
-type Item = Album | Post | Todo;
-type ItemName = "albums" | "posts" | "todos";
+type Item = Album | Comment | Photo | Post | Todo | User;
+type ItemName = "albums" | "comments" | "photos" | "posts" | "todos" | "users";
 const BASE_URL = "https://jsonplaceholder.typicode.com";
 
 const get = (path: string) =>
