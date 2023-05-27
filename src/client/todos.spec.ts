@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import * as client from "./client";
-import * as validators from "./validators";
+import * as client from "./todos";
+import * as validators from "../validators";
 
 describe.concurrent("Todos", () => {
   it("getTodos", async () => {

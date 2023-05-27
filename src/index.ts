@@ -1,2 +1,2 @@
-export * from "./client";
-export type * from "./types";
+export * from "./client/todos";
+export type { Todo } from "./types";
