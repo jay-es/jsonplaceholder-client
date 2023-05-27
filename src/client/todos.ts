@@ -1,21 +1,9 @@
-import type { Id, Todo } from "../types";
-import { get, create, update, patch, del } from "../helpers";
-import type { CreatePayload, UpdatePayload, PatchPayload } from "../helpers";
+import type { Todo } from "../types";
+import { getAll, getOne, create, update, patch, del } from "../helpers";
 
-export const getTodos = (): Promise<Todo[]> => get(`todos`);
-export const getTodo = (todoId: Id): Promise<Todo> => get(`todos/${todoId}`);
-
-export const createTodo = (payload: CreatePayload<Todo>): Promise<Todo> =>
-  create(`todos`, payload);
-
-export const updateTodo = (
-  todoId: Id,
-  payload: UpdatePayload<Todo>
-): Promise<Todo> => update(`todos/${todoId}`, payload);
-
-export const patchTodo = (
-  todoId: Id,
-  payload: PatchPayload<Todo>
-): Promise<Todo> => patch(`todos/${todoId}`, payload);
-
-export const deleteTodo = (todoId: Id): Promise<Todo> => del(`todos/${todoId}`);
+export const getTodos = getAll<Todo>("todos");
+export const getTodo = getOne<Todo>("todos");
+export const createTodo = create<Todo>("todos");
+export const updateTodo = update<Todo>("todos");
+export const patchTodo = patch<Todo>("todos");
+export const deleteTodo = del("todos");

@@ -1,9 +1,11 @@
 import type { Album, Post, Todo } from "./types";
 
+type Id = number | string;
 type Item = Album | Post | Todo;
+type ItemName = "albums" | "posts" | "todos";
 const BASE_URL = "https://jsonplaceholder.typicode.com";
 
-export const get = (path: string) =>
+const get = (path: string) =>
   fetch(`${BASE_URL}/${path}`).then((res) => res.json());
 
 const mutate = (
@@ -17,17 +19,34 @@ const mutate = (
     headers: { "Content-type": "application/json; charset=UTF-8" },
   }).then((res) => res.json());
 
-export type CreatePayload<T extends Item> = Omit<T, "id">;
-export const create = (path: string, payload: CreatePayload<Item>) =>
-  mutate("POST", path, payload);
+export const getAll =
+  <T extends Item>(name: ItemName) =>
+  (): Promise<T[]> =>
+    get(name);
 
-export type UpdatePayload<T extends Item> = T | Omit<T, "id">;
-export const update = (path: string, payload: UpdatePayload<Item>) =>
-  mutate("PUT", path, payload);
+export const getOne =
+  <T extends Item>(name: ItemName) =>
+  (id: Id): Promise<T> =>
+    get(`${name}/${id}`);
 
-export type PatchPayload<T extends Item> = Partial<T>;
-export const patch = (path: string, payload: PatchPayload<Item>) =>
-  mutate("PATCH", path, payload);
+export const create =
+  <T extends Item>(name: ItemName) =>
+  (payload: Omit<T, "id">): Promise<T> =>
+    mutate("POST", name, payload);
 
-export const del = (path: string) =>
-  fetch(`${BASE_URL}/${path}`, { method: "DELETE" }).then((res) => res.json());
+export const update =
+  <T extends Item>(name: ItemName) =>
+  (id: Id, payload: T | Omit<T, "id">): Promise<T> =>
+    mutate("PUT", `${name}/${id}`, payload);
+
+export const patch =
+  <T extends Item>(name: ItemName) =>
+  (id: Id, payload: Partial<T>): Promise<T> =>
+    mutate("PATCH", `${name}/${id}`, payload);
+
+export const del =
+  (name: ItemName) =>
+  (id: Id): Promise<Record<string, never>> =>
+    fetch(`${BASE_URL}/${name}/${id}`, { method: "DELETE" }).then((res) =>
+      res.json()
+    );
