@@ -1,6 +1,6 @@
-import type { Todo } from "./types";
+import type { Album, Post, Todo } from "./types";
 
-type Item = Todo;
+type Item = Album | Post | Todo;
 const BASE_URL = "https://jsonplaceholder.typicode.com";
 
 export const get = (path: string) =>
