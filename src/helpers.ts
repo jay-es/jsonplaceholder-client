@@ -1,6 +1,5 @@
 import type { Album, Comment, Photo, Post, Todo, User } from "./types";
 
-type Id = number | string;
 type Item = Album | Comment | Photo | Post | Todo | User;
 type ItemName = "albums" | "comments" | "photos" | "posts" | "todos" | "users";
 const BASE_URL = "https://jsonplaceholder.typicode.com";
@@ -26,8 +25,13 @@ export const getAll =
 
 export const getOne =
   <T extends Item>(name: ItemName) =>
-  (id: Id): Promise<T> =>
+  (id: number): Promise<T> =>
     get(`${name}/${id}`);
+
+export const getNested =
+  <T extends Item>(name1: ItemName, name2: ItemName) =>
+  (id: number): Promise<T[]> =>
+    get(`${name1}/${id}/${name2}`);
 
 export const create =
   <T extends Item>(name: ItemName) =>
@@ -36,17 +40,17 @@ export const create =
 
 export const update =
   <T extends Item>(name: ItemName) =>
-  (id: Id, payload: T | Omit<T, "id">): Promise<T> =>
+  (id: number, payload: T | Omit<T, "id">): Promise<T> =>
     mutate("PUT", `${name}/${id}`, payload);
 
 export const patch =
   <T extends Item>(name: ItemName) =>
-  (id: Id, payload: Partial<T>): Promise<T> =>
+  (id: number, payload: Partial<T>): Promise<T> =>
     mutate("PATCH", `${name}/${id}`, payload);
 
 export const del =
   (name: ItemName) =>
-  (id: Id): Promise<Record<string, never>> =>
+  (id: number): Promise<Record<string, never>> =>
     fetch(`${BASE_URL}/${name}/${id}`, { method: "DELETE" }).then((res) =>
       res.json()
     );
