@@ -18,10 +18,16 @@ describe.concurrent("Posts", () => {
     expect(res.every((v) => Post.parse(v))).toBeTruthy();
   });
 
-  it("getPost", async () => {
-    const res = await getPost(1);
+  describe("getPost", () => {
+    it("ok", async () => {
+      const res = await getPost(1);
 
-    expect(Post.parse(res)).toBeTruthy();
+      expect(Post.parse(res)).toBeTruthy();
+    });
+
+    it("404", async () => {
+      expect(getPost(9999)).rejects.toThrowError("Not Found");
+    });
   });
 
   it("createPost", async () => {

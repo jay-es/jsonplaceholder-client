@@ -18,10 +18,16 @@ describe.concurrent("Albums", () => {
     expect(res.every((v) => Album.parse(v))).toBeTruthy();
   });
 
-  it("getAlbum", async () => {
-    const res = await getAlbum(1);
+  describe("getAlbum", () => {
+    it("ok", async () => {
+      const res = await getAlbum(1);
 
-    expect(Album.parse(res)).toBeTruthy();
+      expect(Album.parse(res)).toBeTruthy();
+    });
+
+    it("404", async () => {
+      expect(getAlbum(9999)).rejects.toThrowError("Not Found");
+    });
   });
 
   it("createAlbum", async () => {

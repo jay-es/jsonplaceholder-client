@@ -18,10 +18,16 @@ describe.concurrent("Todos", () => {
     expect(res.every((v) => Todo.parse(v))).toBeTruthy();
   });
 
-  it("getTodo", async () => {
-    const res = await getTodo(1);
+  describe("getTodo", () => {
+    it("ok", async () => {
+      const res = await getTodo(1);
 
-    expect(Todo.parse(res)).toBeTruthy();
+      expect(Todo.parse(res)).toBeTruthy();
+    });
+
+    it("404", async () => {
+      expect(getTodo(9999)).rejects.toThrowError("Not Found");
+    });
   });
 
   it("createTodo", async () => {

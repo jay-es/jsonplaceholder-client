@@ -4,8 +4,12 @@ type Item = Album | Comment | Photo | Post | Todo | User;
 type ItemName = "albums" | "comments" | "photos" | "posts" | "todos" | "users";
 const BASE_URL = "https://jsonplaceholder.typicode.com";
 
-const get = (path: string) =>
-  fetch(`${BASE_URL}/${path}`).then((res) => res.json());
+const toJson = (res: Response) => {
+  if (res.ok) return res.json();
+  throw new Error(res.statusText);
+};
+
+const get = (path: string) => fetch(`${BASE_URL}/${path}`).then(toJson);
 
 const mutate = (
   method: "POST" | "PUT" | "PATCH",
@@ -16,7 +20,7 @@ const mutate = (
     method,
     body: JSON.stringify(payload),
     headers: { "Content-type": "application/json; charset=UTF-8" },
-  }).then((res) => res.json());
+  }).then(toJson);
 
 export const getAll =
   <T extends Item>(name: ItemName) =>
@@ -51,6 +55,4 @@ export const patch =
 export const del =
   (name: ItemName) =>
   (id: number): Promise<Record<string, never>> =>
-    fetch(`${BASE_URL}/${name}/${id}`, { method: "DELETE" }).then((res) =>
-      res.json()
-    );
+    fetch(`${BASE_URL}/${name}/${id}`, { method: "DELETE" }).then(toJson);

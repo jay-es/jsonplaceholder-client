@@ -18,10 +18,16 @@ describe.concurrent("Comments", () => {
     expect(res.every((v) => Comment.parse(v))).toBeTruthy();
   });
 
-  it("getComment", async () => {
-    const res = await getComment(1);
+  describe("getComment", () => {
+    it("ok", async () => {
+      const res = await getComment(1);
 
-    expect(Comment.parse(res)).toBeTruthy();
+      expect(Comment.parse(res)).toBeTruthy();
+    });
+
+    it("404", async () => {
+      expect(getComment(9999)).rejects.toThrowError("Not Found");
+    });
   });
 
   it("createComment", async () => {

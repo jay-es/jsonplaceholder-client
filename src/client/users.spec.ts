@@ -18,10 +18,16 @@ describe.concurrent("Users", () => {
     expect(res.every((v) => User.parse(v))).toBeTruthy();
   });
 
-  it("getUser", async () => {
-    const res = await getUser(1);
+  describe("getUser", () => {
+    it("ok", async () => {
+      const res = await getUser(1);
 
-    expect(User.parse(res)).toBeTruthy();
+      expect(User.parse(res)).toBeTruthy();
+    });
+
+    it("404", async () => {
+      expect(getUser(9999)).rejects.toThrowError("Not Found");
+    });
   });
 
   it("createUser", async () => {

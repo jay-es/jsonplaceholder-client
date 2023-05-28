@@ -18,10 +18,16 @@ describe.concurrent("Photos", () => {
     expect(res.every((v) => Photo.parse(v))).toBeTruthy();
   });
 
-  it("getPhoto", async () => {
-    const res = await getPhoto(1);
+  describe("getPhoto", () => {
+    it("ok", async () => {
+      const res = await getPhoto(1);
 
-    expect(Photo.parse(res)).toBeTruthy();
+      expect(Photo.parse(res)).toBeTruthy();
+    });
+
+    it("404", async () => {
+      expect(getPhoto(9999)).rejects.toThrowError("Not Found");
+    });
   });
 
   it("createPhoto", async () => {
