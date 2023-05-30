@@ -1,7 +1,7 @@
 import type { Post } from "../types";
-import { getAll, getOne, create, update, patch, del } from "../helpers";
+import { getList, getOne, create, update, patch, del } from "../helpers";
 
-export const getPosts = getAll<Post>("posts");
+export const getPosts = getList<Post>("posts");
 export const getPost = getOne<Post>("posts");
 export const createPost = create<Post>("posts");
 export const updatePost = update<Post>("posts");

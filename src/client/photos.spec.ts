@@ -11,12 +11,22 @@ import {
 import { Photo } from "../validators";
 
 describe.concurrent("Photos", () => {
-  it("getPhotos", async () => {
-    const res = await getPhotos();
+  describe("getPhotos", () => {
+    it("all", async () => {
+      const res = await getPhotos();
 
-    expect(Array.isArray(res)).toBeTruthy();
-    expect(res).toHaveLength(5000);
-    expect(res.every((v) => Photo.parse(v))).toBeTruthy();
+      expect(Array.isArray(res)).toBeTruthy();
+      expect(res).toHaveLength(5000);
+      expect(res.every((v) => Photo.parse(v))).toBeTruthy();
+    });
+
+    it("filter", async () => {
+      const res = await getPhotos({ albumId: 1 });
+
+      expect(Array.isArray(res)).toBeTruthy();
+      expect(res).toHaveLength(50);
+      expect(res.every((v) => Photo.parse(v))).toBeTruthy();
+    });
   });
 
   describe("getPhoto", () => {

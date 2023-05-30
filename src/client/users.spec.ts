@@ -11,12 +11,22 @@ import {
 import { User } from "../validators";
 
 describe.concurrent("Users", () => {
-  it("getUsers", async () => {
-    const res = await getUsers();
+  describe("getUsers", () => {
+    it("all", async () => {
+      const res = await getUsers();
 
-    expect(Array.isArray(res)).toBeTruthy();
-    expect(res).toHaveLength(10);
-    expect(res.every((v) => User.parse(v))).toBeTruthy();
+      expect(Array.isArray(res)).toBeTruthy();
+      expect(res).toHaveLength(10);
+      expect(res.every((v) => User.parse(v))).toBeTruthy();
+    });
+
+    it("filter", async () => {
+      const res = await getUsers({ id: 1 });
+
+      expect(Array.isArray(res)).toBeTruthy();
+      expect(res).toHaveLength(1);
+      expect(res.every((v) => User.parse(v))).toBeTruthy();
+    });
   });
 
   describe("getUser", () => {

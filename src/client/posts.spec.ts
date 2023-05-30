@@ -11,12 +11,22 @@ import {
 import { Post } from "../validators";
 
 describe.concurrent("Posts", () => {
-  it("getPosts", async () => {
-    const res = await getPosts();
+  describe("getPosts", () => {
+    it("all", async () => {
+      const res = await getPosts();
 
-    expect(Array.isArray(res)).toBeTruthy();
-    expect(res).toHaveLength(100);
-    expect(res.every((v) => Post.parse(v))).toBeTruthy();
+      expect(Array.isArray(res)).toBeTruthy();
+      expect(res).toHaveLength(100);
+      expect(res.every((v) => Post.parse(v))).toBeTruthy();
+    });
+
+    it("filter", async () => {
+      const res = await getPosts({ userId: 1 });
+
+      expect(Array.isArray(res)).toBeTruthy();
+      expect(res).toHaveLength(10);
+      expect(res.every((v) => Post.parse(v))).toBeTruthy();
+    });
   });
 
   describe("getPost", () => {
