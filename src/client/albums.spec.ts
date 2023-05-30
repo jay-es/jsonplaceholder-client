@@ -15,6 +15,7 @@ describe.concurrent("Albums", () => {
     const res = await getAlbums();
 
     expect(Array.isArray(res)).toBeTruthy();
+    expect(res).toHaveLength(100);
     expect(res.every((v) => Album.parse(v))).toBeTruthy();
   });
 

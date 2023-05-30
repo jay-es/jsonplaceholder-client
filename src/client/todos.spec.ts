@@ -15,6 +15,7 @@ describe.concurrent("Todos", () => {
     const res = await getTodos();
 
     expect(Array.isArray(res)).toBeTruthy();
+    expect(res).toHaveLength(200);
     expect(res.every((v) => Todo.parse(v))).toBeTruthy();
   });
 

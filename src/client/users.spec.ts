@@ -15,6 +15,7 @@ describe.concurrent("Users", () => {
     const res = await getUsers();
 
     expect(Array.isArray(res)).toBeTruthy();
+    expect(res).toHaveLength(10);
     expect(res.every((v) => User.parse(v))).toBeTruthy();
   });
 

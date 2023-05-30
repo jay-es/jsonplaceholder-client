@@ -15,6 +15,7 @@ describe.concurrent("Photos", () => {
     const res = await getPhotos();
 
     expect(Array.isArray(res)).toBeTruthy();
+    expect(res).toHaveLength(5000);
     expect(res.every((v) => Photo.parse(v))).toBeTruthy();
   });
 

@@ -15,6 +15,7 @@ describe.concurrent("Comments", () => {
     const res = await getComments();
 
     expect(Array.isArray(res)).toBeTruthy();
+    expect(res).toHaveLength(500);
     expect(res.every((v) => Comment.parse(v))).toBeTruthy();
   });
 
