@@ -1,11 +1,16 @@
 {
-  "name": "jsonplaceholder-client",
-  "version": "1.0.0",
+  "name": "@jay-es/jsonplaceholder-client",
+  "version": "0.1.0",
   "description": "Fully typed client for JSONPlaceholder",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "README.md",
+    "dist"
+  ],
   "scripts": {
     "prepare": "husky install",
+    "prepublishOnly": "npm run build",
     "build": "rollup -c ./rollup.config.mjs",
     "format": "prettier --write --ignore-path .gitignore --ignore-unknown .",
     "lint": "eslint --cache .",
@@ -16,9 +21,21 @@
     "*.{ts,tsx}": "vitest related --run",
     "*": "prettier --check --ignore-unknown"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jay-es/jsonplaceholder-client.git"
+  },
+  "keywords": [
+    "api",
+    "jsonplaceholder",
+    "typescript"
+  ],
+  "author": "jay-es",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jay-es/jsonplaceholder-client/issues"
+  },
+  "homepage": "https://github.com/jay-es/jsonplaceholder-client#readme",
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.1",
     "@tsconfig/node18": "^2.0.1",
