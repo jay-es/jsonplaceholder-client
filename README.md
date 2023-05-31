@@ -30,7 +30,7 @@ const post = await getPost(1);
 const allPosts = await getPosts();
 
 // Filtering resources
-const userPosts = await getPosts({ userId: 1 });
+const user1Posts = await getPosts({ userId: 1 });
 
 // Creating a resource
 await createPost({ userId: 7, title: "Foo", body: "Lorem ipsum" });
