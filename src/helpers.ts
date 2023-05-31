@@ -22,10 +22,14 @@ const mutate = (
     headers: { "Content-type": "application/json; charset=UTF-8" },
   }).then(toJson);
 
-export const getAll =
+export const getList =
   <T extends Item>(name: ItemName) =>
-  (): Promise<T[]> =>
-    get(name);
+  (filter?: Partial<T>): Promise<T[]> => {
+    if (!filter) return get(name);
+
+    const params = Object.entries(filter).map(([k, v]) => `${k}=${v}`);
+    return get(`${name}?${params.join("&")}`);
+  };
 
 export const getOne =
   <T extends Item>(name: ItemName) =>

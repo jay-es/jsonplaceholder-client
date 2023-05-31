@@ -11,11 +11,22 @@ import {
 import { Todo } from "../validators";
 
 describe.concurrent("Todos", () => {
-  it("getTodos", async () => {
-    const res = await getTodos();
+  describe("getTodos", () => {
+    it("all", async () => {
+      const res = await getTodos();
 
-    expect(Array.isArray(res)).toBeTruthy();
-    expect(res.every((v) => Todo.parse(v))).toBeTruthy();
+      expect(Array.isArray(res)).toBeTruthy();
+      expect(res).toHaveLength(200);
+      expect(res.every((v) => Todo.parse(v))).toBeTruthy();
+    });
+
+    it("filter", async () => {
+      const res = await getTodos({ userId: 1 });
+
+      expect(Array.isArray(res)).toBeTruthy();
+      expect(res).toHaveLength(20);
+      expect(res.every((v) => Todo.parse(v))).toBeTruthy();
+    });
   });
 
   describe("getTodo", () => {

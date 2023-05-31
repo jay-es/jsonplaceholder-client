@@ -11,11 +11,22 @@ import {
 import { Album } from "../validators";
 
 describe.concurrent("Albums", () => {
-  it("getAlbums", async () => {
-    const res = await getAlbums();
+  describe("getAlbums", () => {
+    it("all", async () => {
+      const res = await getAlbums();
 
-    expect(Array.isArray(res)).toBeTruthy();
-    expect(res.every((v) => Album.parse(v))).toBeTruthy();
+      expect(Array.isArray(res)).toBeTruthy();
+      expect(res).toHaveLength(100);
+      expect(res.every((v) => Album.parse(v))).toBeTruthy();
+    });
+
+    it("filter", async () => {
+      const res = await getAlbums({ userId: 1 });
+
+      expect(Array.isArray(res)).toBeTruthy();
+      expect(res).toHaveLength(10);
+      expect(res.every((v) => Album.parse(v))).toBeTruthy();
+    });
   });
 
   describe("getAlbum", () => {

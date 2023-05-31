@@ -11,11 +11,22 @@ import {
 import { Comment } from "../validators";
 
 describe.concurrent("Comments", () => {
-  it("getComments", async () => {
-    const res = await getComments();
+  describe("getComments", () => {
+    it("all", async () => {
+      const res = await getComments();
 
-    expect(Array.isArray(res)).toBeTruthy();
-    expect(res.every((v) => Comment.parse(v))).toBeTruthy();
+      expect(Array.isArray(res)).toBeTruthy();
+      expect(res).toHaveLength(500);
+      expect(res.every((v) => Comment.parse(v))).toBeTruthy();
+    });
+
+    it("filter", async () => {
+      const res = await getComments({ postId: 1 });
+
+      expect(Array.isArray(res)).toBeTruthy();
+      expect(res).toHaveLength(5);
+      expect(res.every((v) => Comment.parse(v))).toBeTruthy();
+    });
   });
 
   describe("getComment", () => {
