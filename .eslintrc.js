@@ -6,6 +6,8 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/strict",
+    "plugin:@typescript-eslint/stylistic",
     "prettier",
   ],
   overrides: [],
@@ -16,6 +18,11 @@ module.exports = {
   },
   plugins: ["@typescript-eslint"],
   rules: {
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
     "@typescript-eslint/explicit-module-boundary-types": "error",
+
+    // tsconfig の verbatimModuleSyntax の代わり
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/no-import-type-side-effects": "error",
   },
 };
