@@ -5,7 +5,10 @@ import pluginDts from "rollup-plugin-dts";
 const config = [
   {
     input: "./src/index.ts",
-    output: { dir: "dist" },
+    output: [
+      { file: "dist/index.js", format: "commonjs" },
+      { file: "dist/index.mjs", format: "esm" },
+    ],
     plugins: [typescriptPlugin({ removeComments: true })],
   },
   {

@@ -2,8 +2,16 @@
   "name": "@jay-es/jsonplaceholder-client",
   "version": "0.2.0",
   "description": "Fully typed client for JSONPlaceholder",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
     "README.md",
     "dist"
@@ -11,6 +19,7 @@
   "scripts": {
     "prepare": "husky install",
     "prepublishOnly": "npm run build",
+    "prebuild": "rm ./dist/*.*",
     "build": "rollup -c ./rollup.config.mjs",
     "format": "prettier --write --ignore-path .gitignore --ignore-unknown .",
     "lint": "eslint --cache .",

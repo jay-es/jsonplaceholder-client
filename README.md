@@ -11,13 +11,7 @@ Fully typed client of [the JSONPlaceholder API](https://jsonplaceholder.typicode
 ## Install
 
 ```sh
-$ npm i @jay-es/jsonplaceholder-client
-```
-
-or
-
-```sh
-$ yarn add @jay-es/jsonplaceholder-client
+$ npm install @jay-es/jsonplaceholder-client
 ```
 
 ## Features
