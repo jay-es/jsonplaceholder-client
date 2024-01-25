@@ -1,6 +1,6 @@
 {
   "name": "@jay-es/jsonplaceholder-client",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Fully typed client for JSONPlaceholder",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
